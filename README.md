@@ -1,4 +1,45 @@
-# React + TypeScript + Vite
+# La Quatre
+
+## Install & run
+
+This is a [Vite project](https://vite.dev/), configured with React and Typescript, and [Vitest](https://vitest.dev/) for unit tests.
+
+To install, from the root of the project,
+
+- Make sure you are using the correct node version: `nvm install` ([nvm](https://github.com/nvm-sh/nvm)).
+- Install dependencies: `yarn install # do not use npm`.
+- And configure the development env vars in `.env`, based on `.env.dist`. Ask a friendly looking collegue for API keys.
+
+To run the dev server,
+
+- Run `yarn dev`.
+
+To perform a production build,
+
+- Run `yarn build`.
+
+For other scripts (linting, type-checking, unit testing...), see `package.json`.
+
+## Overview
+
+### Styles
+
+- The project uses plain modern CSS.
+- Currently, it uses a simple two file system, with generic styles in `index.css` and app styles in `App.css`. CSS modules or an equivalent may be preferable, should the SPWA grow.
+
+### Project layout
+
+The project layout reflects how simple the project is, so
+
+- Directly in the `src/` folder lie all entrypoints and files that are globally meaningful.
+- Separate React components are in `src/components`.
+
+Besides,
+
+- Unit test files live beside the file they cover, following the `TestedFile.test.ts(x)` convention.
+- If a file needs exportable types, it will come with a `File.types.ts` counterpart.
+
+# DEFAULT DOCUMENTATION: React + TypeScript + Vite (TODO)
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
