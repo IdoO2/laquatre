@@ -1,45 +1,128 @@
 #root {
-  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.page-section {
+  padding: 1em;
 }
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.page-section:not(:last-child) {
+  border-bottom: solid 1px var(--text-color);
 }
 
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+#main-header {
+  text-align: left;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #fff;
   }
 
-  to {
-    transform: rotate(360deg);
+  a:hover {
+    color: #747bff;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  button {
+    background-color: #f9f9f9;
   }
 }
 
-.card {
-  padding: 2em;
+#main-header .title {
+  margin: 0 auto;
+  font-size: 1.5rem;
 }
 
-.read-the-docs {
-  color: #888;
+#search-section {
+  min-height: 30vh;
+  display: flex;
+  flex-direction: column;
+  place-content: center center;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.field {
+  padding: 0.5em 1em;
+  border: solid 1px var(--text-color);
+  line-height: 1.5;
+  border-radius: 2px;
+}
+
+.jumbo-search {
+  width: 50vw;
+  min-width: 240px;
+  max-width: 800px;
+  font-size: 1.5rem;
+}
+
+.movie-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+  gap: 1rem;
+}
+
+.movie-list-item {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-width: 50%;
+  margin: 0;
+  padding: 1em;
+  border: solid 1px var(--text-color);
+  border-radius: 2px;
+}
+
+.list .movie-list-item {
+  flex-direction: row;
+  flex-basis: 100%;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-align: left;
+}
+
+.movie-list-picture {
+  display: block;
+  color: #aa4500;
+}
+
+.list .movie-list-picture {
+  margin: 0 1rem 0 0;
+  max-width: 60px;
+}
+
+.results-overlay {
+  position: absolute;
+  width: 80vw;
+  max-width: 800px;
+  max-height: 50vh;
+  overflow: auto;
+  left: 10vw;
+  right: 10vw;
+  background: var(--background-color);
+  box-shadow: rgba(0, 0, 0, 25%) 0px 9px 8px 8px;
+  border-radius: 7px;
+}
+
+.close-button {
+  display: block;
+  width: 100%;
+  text-align: right;
+  background: inherit;
+  border: 0;
 }
