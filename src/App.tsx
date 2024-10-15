@@ -2,14 +2,10 @@ import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import './App.css';
 import { MasterSearch } from './components/MasterSearch';
-import type { DBListResponse, Movie } from './types';
+import type { Movie } from './types';
 import { MovieList } from './components/MovieList';
 import { MovieListModes } from './components/MovieList.types';
-import { mapDBMoviesToAppMovies } from './movie-helpers';
-import { API_KEY, API_V3_BASE_URL } from './consts';
-
-// TODO Proper URL building
-const API_DISCOVER_URL = `${API_V3_BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&page=1&timezone=America/New_York&include_null_first_air_dates=false`;
+import { fetchSuggestedMovies } from './api';
 
 export const App: FC = () => {
   const [suggestedMovies, setSuggestedMovies] = useState<Movie[]>([]);
@@ -18,14 +14,9 @@ export const App: FC = () => {
   // TODO Clean, isolate
   useEffect(() => {
     if (suggestedMovies.length || movieFetchError) return;
-    fetch(API_DISCOVER_URL)
-      .then((res) => {
-        return res.json();
-      })
-      // TODO Better `fetch` typing
-      .then(({ results }: DBListResponse) => {
-        const movies = mapDBMoviesToAppMovies(results);
-        setSuggestedMovies(movies.slice(0, 8));
+    fetchSuggestedMovies()
+      .then(({ results }) => {
+        setSuggestedMovies(results.slice(0, 8));
       })
       .catch((error) => {
         // TODO User feedback, possibly Retry

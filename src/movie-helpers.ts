@@ -12,10 +12,10 @@ export function mapDBMoviesToAppMovies(movies: DBMovie[]): Movie[] {
         ({ poster_path, name, title }) =>
           Boolean(poster_path) && Boolean(name || title),
       )
+      // TODO Sort available in URL params
       .sort(({ vote_average: a }, { vote_average: b }) => b - a)
       .map(({ id, name, poster_path, title, vote_average }) => ({
         id,
-        // TODO Last fallback for TS
         name: name || title || '',
         // TODO get base URL, handle image size
         picture: poster_path

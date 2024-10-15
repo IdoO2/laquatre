@@ -2,13 +2,13 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import type { DBListResponse, Movie } from '../types';
-import { API_KEY, API_V3_BASE_URL } from '../consts';
+import type { ListResponse, Movie } from '../types';
+import { fetchMoviesByKeyword } from '../api';
 import { sanitiseInput } from '../form-helpers';
-import { mapDBMoviesToAppMovies } from '../movie-helpers';
 
 const MIN_TITLE_SEARCH_LENGTH = 4;
 const MAX_TITLE_SEARCH_LENGTH = 40;
+const noop = () => {};
 
 export const URL_SEARCH_PARAM = 'keyword';
 
@@ -17,17 +17,15 @@ export function useMasterSearch(location: Location) {
   const [searchedTerm, setSearchedTerm] = useState<string>('');
 
   const successCallback = useCallback(
-    ({ results }: DBListResponse) => {
+    ({ results }: Pick<ListResponse, 'results'>) => {
       reflectSearchOnURL(location, searchedTerm);
-      setSearchResults(mapDBMoviesToAppMovies(results));
+      setSearchResults(results);
     },
     [location, searchedTerm],
   );
 
-  const errorCallback = useCallback((error: string) => {
-    // TODO User feedback
-    console.error(error);
-  }, []);
+  // TODO User feedback, possibly retry
+  const errorCallback = noop;
 
   useEffect(() => {
     // Run previous search from query string,
@@ -100,7 +98,5 @@ function fetchMoviesForQuery(terms: string) {
     return Promise.reject('Searched terms invalid.');
   }
 
-  return fetch(
-    `${API_V3_BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}`,
-  ).then((res) => res.json());
+  return fetchMoviesByKeyword(query);
 }

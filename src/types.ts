@@ -20,3 +20,7 @@ export interface Movie {
   picture: string;
   score: number;
 }
+
+export interface ListResponse extends Omit<DBListResponse, 'results'> {
+  results: Movie[];
+}
