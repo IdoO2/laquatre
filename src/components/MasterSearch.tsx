@@ -23,11 +23,16 @@ export const MasterSearch: FC = () => {
   return (
     <div className="master-search">
       <input
+        id="master-search-field"
         type="text"
-        className="field jumbo-search"
+        className="field block-field jumbo-search"
         value={searchedTerm}
         onChange={updateSearchedTerm}
+        placeholder="dolores"
       />
+      <label htmlFor="master-search-field" className="block-field">
+        Tapez quelques lettres pour lancer une recherche
+      </label>
       {Boolean(searchResults.length) && (
         <div className="results-overlay">
           <button className="close-button" onClick={closeResults}>

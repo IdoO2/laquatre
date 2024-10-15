@@ -28,7 +28,9 @@ export const App: FC = () => {
   return (
     <>
       <header id="main-header" className="page-section">
-        <h1 className="title">La Quatre</h1>
+        <h1 className="title">
+          <a href="/">La Quatre</a>
+        </h1>
       </header>
       <section id="search-section" className="page-section">
         <h1 className="section-title">Trouvez le film de vos rêves</h1>
