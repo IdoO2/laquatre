@@ -1,3 +1,5 @@
+/* Generic form helpers */
+
 function normaliseString(input: string) {
   return input.trim().toLocaleLowerCase();
 }
