@@ -44,7 +44,7 @@ In addition to existing TODOs, Some areas for improvement have been identified: 
 
 ### Performance
 
-- Limit the number of calls per X time during search. Solution 1: debounce updates to search; Solution 2: use a flag to prevent calls. Solution 2 has been implements, but may need challenging.
+- Limit the number of calls per X time during search. Solution 1: debounce updates to search; Solution 2: use a flag to prevent calls. Solution 2 has been implemented, but isn’t ideal.
 - Loading less films per request would help. Query parameters can also be modified to load less data.
 - Caching results could be desirable, especially when implementing movie detail display. React context + reducer or a library such as RxJS would be useful.
 
