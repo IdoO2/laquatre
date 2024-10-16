@@ -8,7 +8,6 @@ export const MasterSearch: FC = () => {
   const { searchResults, setSearchResults, searchedTerm, setSearchedTerm } =
     useMasterSearch(window.location);
 
-  // TODO Debounce
   const updateSearchedTerm = useCallback(
     ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
       setSearchedTerm(value);

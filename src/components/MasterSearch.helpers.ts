@@ -1,6 +1,6 @@
 /* Helpers related to search rules */
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import type { ListResponse, Movie } from '../types';
 import { fetchMoviesByKeyword } from '../api';
@@ -15,6 +15,7 @@ export const URL_SEARCH_PARAM = 'keyword';
 export function useMasterSearch(location: Location) {
   const [searchResults, setSearchResults] = useState<Movie[]>([]);
   const [searchedTerm, setSearchedTerm] = useState<string>('');
+  const searchOngoing = useRef(false);
 
   const successCallback = useCallback(
     ({ results }: Pick<ListResponse, 'results'>) => {
@@ -31,21 +32,30 @@ export function useMasterSearch(location: Location) {
     // Run previous search from query string,
     // ONCE, on page load
     const query = getQueryFromURL(location.search);
-    if (query) {
-      fetchMoviesForQuery(query).then(successCallback).catch(errorCallback);
+    if (query && !searchOngoing.current) {
+      searchOngoing.current = true;
+      fetchMoviesForQuery(query)
+        .then(successCallback)
+        .catch(errorCallback)
+        .finally(() => {
+          searchOngoing.current = false;
+        });
       setSearchedTerm(query);
     }
     reflectSearchOnURL(location, query);
     // eslint-disable-next-line
   }, []);
 
-  // TODO Prevent concurrent calls (incl. on page load)
   useEffect(() => {
     if (!searchedTermsAreValid(searchedTerm)) return;
-    // Perform new search when search terms have changed
-    fetchMoviesForQuery(searchedTerm)
-      .then(successCallback)
-      .catch(errorCallback);
+    if (!searchOngoing.current) {
+      // Perform new search when search terms have changed
+      searchOngoing.current = true;
+      fetchMoviesForQuery(searchedTerm)
+        .then(successCallback)
+        .catch(errorCallback)
+        .finally(() => (searchOngoing.current = false));
+    }
   }, [errorCallback, searchedTerm, successCallback]);
 
   return useMemo(
