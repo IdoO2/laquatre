@@ -4,18 +4,23 @@ import type { Movie } from '../types';
 import { MovieListModes } from './MovieList.types';
 
 interface MovieListProps {
-  mode: MovieListModes;
-  movies: Movie[];
+  mode?: MovieListModes;
+  movies?: Movie[];
 }
 
 export const MovieList: FC<MovieListProps> = memo(
   ({ mode = MovieListModes.GRID, movies = [] }) => {
     return (
-      <ul className={['movie-list', mode].join(' ')}>
+      <ul className={['movie-list', mode].join(' ')} data-testid="movie-list">
         {movies.map(({ id, name, picture }) => (
-          <li key={`movie-${id}`} className="movie-list-item">
+          <li
+            key={`movie-${id}`}
+            className="movie-list-item"
+            data-testid="movie-list-item"
+          >
             <img
               className="movie-list-picture"
+              data-testid="movie-list-image"
               src={picture}
               alt={`Affiche de ${name}`}
             />
