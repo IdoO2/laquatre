@@ -12,17 +12,20 @@ const noop = () => {};
 
 export const URL_SEARCH_PARAM = 'keyword';
 
-export function useMasterSearch(location: Location) {
+export function useMasterSearch(
+  windowLocation: Location,
+  windowHistory: History,
+) {
   const [searchResults, setSearchResults] = useState<Movie[]>([]);
   const [searchedTerm, setSearchedTerm] = useState<string>('');
   const searchOngoing = useRef(false);
 
   const successCallback = useCallback(
     ({ results }: Pick<ListResponse, 'results'>) => {
-      reflectSearchOnURL(location, searchedTerm);
+      reflectSearchOnURL({ windowLocation, windowHistory }, searchedTerm);
       setSearchResults(results);
     },
-    [location, searchedTerm],
+    [windowHistory, windowLocation, searchedTerm],
   );
 
   // TODO User feedback, possibly retry
@@ -31,7 +34,7 @@ export function useMasterSearch(location: Location) {
   useEffect(() => {
     // Run previous search from query string,
     // ONCE, on page load
-    const query = getQueryFromURL(location.search);
+    const query = getQueryFromURL(windowLocation.search);
     if (query && !searchOngoing.current) {
       searchOngoing.current = true;
       fetchMoviesForQuery(query)
@@ -42,7 +45,8 @@ export function useMasterSearch(location: Location) {
         });
       setSearchedTerm(query);
     }
-    reflectSearchOnURL(location, query);
+    reflectSearchOnURL({ windowLocation, windowHistory }, query);
+    // Because we want this to run only once,
     // eslint-disable-next-line
   }, []);
 
@@ -76,16 +80,22 @@ function searchedTermsAreValid(query: string) {
   );
 }
 
-function reflectSearchOnURL(location: Location, query: string) {
-  const url = new URL(location.href);
+function reflectSearchOnURL(
+  {
+    windowLocation,
+    windowHistory,
+  }: { windowLocation: Location; windowHistory: typeof window.history },
+  query: string,
+) {
+  const url = new URL(windowLocation.href);
 
   if (!searchedTermsAreValid(query)) {
-    history.pushState({}, '', location.href.split('?')[0]);
+    windowHistory.pushState({}, '', windowLocation.href.split('?')[0]);
     return;
   }
 
   url.searchParams.set(URL_SEARCH_PARAM, query);
-  history.pushState({}, '', url);
+  windowHistory.pushState({}, '', url);
 }
 
 // `search` from `window.location`

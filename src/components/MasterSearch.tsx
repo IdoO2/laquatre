@@ -6,7 +6,7 @@ import { useMasterSearch } from './MasterSearch.helpers';
 
 export const MasterSearch: FC = () => {
   const { searchResults, setSearchResults, searchedTerm, setSearchedTerm } =
-    useMasterSearch(window.location);
+    useMasterSearch(window.location, window.history);
 
   const updateSearchedTerm = useCallback(
     ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
