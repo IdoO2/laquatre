@@ -20,6 +20,8 @@ dist-ssr
 !.yarn/sdks
 !.yarn/versions
 
+tsconfig.*.tsbuildinfo
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
