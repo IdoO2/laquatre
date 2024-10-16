@@ -22,6 +22,8 @@ For other scripts (linting, type-checking, unit testing...), see `package.json`.
 
 ## Overview
 
+See CONTRIBUTING.md for a list of improvements to come.
+
 ### Styles
 
 - The project uses plain modern CSS.
