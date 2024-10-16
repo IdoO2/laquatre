@@ -117,8 +117,6 @@
 
 .results-overlay {
   position: absolute;
-  width: 80vw;
-  max-width: 800px;
   max-height: 50vh;
   overflow: auto;
   left: 10vw;
