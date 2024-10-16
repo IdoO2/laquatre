@@ -4,12 +4,12 @@ import './App.css';
 import { MasterSearch } from './components/MasterSearch';
 import type { DBListResponse, Movie } from './types';
 import { MovieList } from './components/MovieList';
-import { MovieListModes } from './components/MovieList.types'
+import { MovieListModes } from './components/MovieList.types';
 import { mapDBMoviesToAppMovies } from './movie-helpers';
-import { API_V3_BASE_URL } from './consts';
+import { API_KEY, API_V3_BASE_URL } from './consts';
 
 // TODO Proper URL building
-const API_DISCOVER_URL = `${API_V3_BASE_URL}/discover/tv?api_key=92b418e837b833be308bbfb1fb2aca1e&language=en-US&sort_by=popularity.desc&page=1&timezone=America/New_York&include_null_first_air_dates=false`;
+const API_DISCOVER_URL = `${API_V3_BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&page=1&timezone=America/New_York&include_null_first_air_dates=false`;
 
 export const App: FC = () => {
   const [suggestedMovies, setSuggestedMovies] = useState<Movie[]>([]);
