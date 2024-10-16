@@ -38,6 +38,10 @@
   font-size: 1.5rem;
 }
 
+#main-header .title a:not(:hover) {
+  color: inherit;
+}
+
 #search-section {
   min-height: 30vh;
   display: flex;
@@ -56,6 +60,11 @@
   border: solid 1px var(--text-color);
   line-height: 1.5;
   border-radius: 2px;
+}
+
+.block-field {
+  display: block;
+  margin: 0 0 0.75rem;
 }
 
 .jumbo-search {
@@ -114,6 +123,7 @@
   overflow: auto;
   left: 10vw;
   right: 10vw;
+  transform: translate3d(0, -1.5rem, 0);
   background: var(--background-color);
   box-shadow: rgb(0 0 0 / 25%) 0 9px 8px 8px;
   border-radius: 7px;
